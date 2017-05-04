@@ -3,8 +3,11 @@ package com.yusufcakal.ra.activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.yusufcakal.ra.R;
 import com.yusufcakal.ra.adapter.GridAdapterDesk;
@@ -12,7 +15,7 @@ import com.yusufcakal.ra.adapter.GridAdapterDesk;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StaffDeskActivity extends AppCompatActivity {
+public class StaffDeskActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
 
     private TextView tvActionBar;
     private GridView gridView;
@@ -32,6 +35,8 @@ public class StaffDeskActivity extends AppCompatActivity {
         }
 
         gridView = (GridView) findViewById(R.id.gvDesk);
+        gridView.setOnItemClickListener(this);
+
         gridAdapter = new GridAdapterDesk(this, ıntegerList);
         gridView.setAdapter(gridAdapter);
 
@@ -47,5 +52,10 @@ public class StaffDeskActivity extends AppCompatActivity {
         super.onBackPressed();
         startActivity(new Intent(this, MainActivity.class));
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Toast.makeText(this, String.valueOf(position), Toast.LENGTH_SHORT).show();
     }
 }
