@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#604530</color>
+    <color name="colorAccent">#d94130</color>
+    <color name="colorWhite">#fff</color>
+    <color name="btnBavkground">#F1A9A0</color>
+    <color name="staffLoginBackground">#eee</color>
+
+    <!-- CREATE A COLOR ARRAY IN COLORS XML -->
+    <color name="btnOrderDarker">#19694d</color>
+    <color name="btnOrderDark">#218c67</color>
+    <color name="btnOrderPrimary">#2ab081</color>
+    <color name="btnOrderLight">#54bf9a</color>
+
+    <!-- CREATE A COLOR ARRAY IN COLORS XML -->
+    <color name="btnStaffDarker">#82271c</color>
+    <color name="btnStaffDark">#ad3426</color>
+    <color name="btnStaffPrimary">#d94130</color>
+    <color name="btnStaffLight">#e06659</color>
+
+    <integer-array name="btnOrderTheme">
+        <item>@color/btnOrderDarker</item>
+        <item>@color/btnOrderDark</item>
+        <item>@color/btnOrderPrimary</item>
+        <item>@color/btnOrderLight</item>
+    </integer-array>
+
+    <integer-array name="btnStaffTheme">
+        <item>@color/btnStaffDarker</item>
+        <item>@color/btnStaffDark</item>
+        <item>@color/btnStaffPrimary</item>
+        <item>@color/btnStaffLight</item>
+    </integer-array>
+
+</resources>

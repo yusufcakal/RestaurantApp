@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">RA</string>
+    <string name="staff">PERSONEL</string>
+    <string name="staffLogin">GİRİŞ YAP</string>
+    <string name="order">SİPARİŞ VER</string>
+    <string name="copyright">www.restaurantapp.com</string>
+    <string name="staffLoginHeader">PERSONEL GİRİŞ</string>
+    <string name="staffDeskHeader">MASALAR</string>
+    <string name="orderCategory">KATEGORİLER</string>
+    <string name="product">ÜRÜNLER</string>
+    <string name="add">EKLE</string>
+</resources>

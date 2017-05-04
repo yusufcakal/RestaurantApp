@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#eee"
+    xmlns:flatui="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/TILUsername"
+                android:layout_marginTop="10dp"
+                >
+
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                    android:id="@+id/etUsername"
+                    android:hint="Kullanıcı adı"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/TILPassword"
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/TILUsername"
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="@color/colorAccent"
+                >
+
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                    android:id="@+id/etPassword"
+                    android:inputType="textPassword"
+                    android:hint="Parola"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <com.cengalabs.flatui.views.FlatButton
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                flatui:fl_touchEffect="fl_ripple"
+                flatui:fl_blockButtonEffectHeight="3dp"
+                android:text="@string/staffLogin"
+                android:id="@+id/btnLogin"
+                flatui:fl_theme="@array/btnStaffTheme"
+                android:layout_below="@+id/TILPassword"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>
