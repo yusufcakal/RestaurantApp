@@ -63,7 +63,7 @@ public class CategoryFragment extends Fragment implements AdapterView.OnItemClic
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        categoryCallback.call(new ProductFragment());
+        categoryCallback.call(new ProductFragment(), position);
     }
 
     @Override
@@ -79,10 +79,12 @@ public class CategoryFragment extends Fragment implements AdapterView.OnItemClic
     }
 
     @Override
-    public void onSucces(JSONArray result) {
-        for (int i=0; i<result.length(); i++){
-            try {
-                JSONObject jsonObject = result.getJSONObject(i);
+    public void onSucces(JSONObject result) {
+        JSONArray jsonArray = null;
+        try {
+            jsonArray = result.getJSONArray("categories");
+            for (int i=0; i<jsonArray.length(); i++){
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
 
                 String catId = jsonObject.getString("categoryId");
                 String name = jsonObject.getString("name");
@@ -90,10 +92,9 @@ public class CategoryFragment extends Fragment implements AdapterView.OnItemClic
 
                 category = new Category(catId, name, image);
                 categoryList.add(category);
-
-            } catch (JSONException e) {
-                e.printStackTrace();
             }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
 
         gridAdapterCategory = new GridAdapterCategory(getActivity(), categoryList);

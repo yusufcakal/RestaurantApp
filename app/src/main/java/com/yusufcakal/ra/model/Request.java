@@ -41,15 +41,7 @@ public class Request {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(requestMethod, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-
-                JSONArray jsonArray = null;
-                try {
-                    jsonArray = response.getJSONArray("categories");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                callback.onSucces(jsonArray);
-
+                callback.onSucces(response);
             }
         }, new Response.ErrorListener() {
             @Override

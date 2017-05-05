@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.yusufcakal.ra.R;
+import com.yusufcakal.ra.fragment.BasketFragment;
 import com.yusufcakal.ra.fragment.CategoryFragment;
 import com.yusufcakal.ra.interfaces.CategoryCallback;
 
@@ -49,7 +50,8 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if (v.equals(imCart)){
-            Toast.makeText(this, "Sepetim", Toast.LENGTH_SHORT).show();
+            startFragment(new BasketFragment());
+            tvActionBar.setText("SEPETİM");
         }
     }
 
@@ -61,7 +63,10 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public void call(Fragment fragment) {
+    public void call(Fragment fragment, int id) {
+        Bundle bundle = new Bundle();
+        bundle.putInt("id",id);
+        fragment.setArguments(bundle);
         startFragment(fragment);
         tvActionBar.setText(getApplicationContext().getResources().getString(R.string.product));
     }

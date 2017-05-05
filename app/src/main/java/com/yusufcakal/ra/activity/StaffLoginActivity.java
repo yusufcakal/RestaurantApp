@@ -81,8 +81,9 @@ public class StaffLoginActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
+
     @Override
-    public void onSucces(JSONArray result) {
+    public void onSucces(JSONObject result) {
 
     }
 

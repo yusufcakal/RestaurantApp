@@ -9,6 +9,6 @@ import android.view.View;
 
 public interface CategoryCallback {
 
-    void call(Fragment fragment);
+    void call(Fragment fragment, int id);
 
 }
