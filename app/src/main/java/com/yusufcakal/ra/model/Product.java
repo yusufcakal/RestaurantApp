@@ -16,13 +16,14 @@ public class Product {
     public Product() {
     }
 
-    public Product(int productId, int star, int categoryId, String name, String description, double price) {
+    public Product(int productId, int star, int categoryId, String name, String description, double price, List<String> imageList) {
         this.productId = productId;
         this.star = star;
         this.categoryId = categoryId;
         this.name = name;
         this.description = description;
         this.price = price;
+        this.imageList = imageList;
     }
 
     public int getProductId() {

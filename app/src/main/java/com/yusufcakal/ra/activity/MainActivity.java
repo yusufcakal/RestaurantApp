@@ -31,8 +31,6 @@ public class MainActivity extends Activity implements View.OnClickListener{
         btnStaff.setTypeface(tfRegular);
         btnOrder.setTypeface(tfRegular);
 
-
-
     }
 
     @Override
@@ -49,11 +47,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
-
-
         //TODO:App is finish
-
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_HOME);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

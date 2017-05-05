@@ -3,13 +3,42 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:id="@+id/imProduct"
+        android:padding="15dp"
+        />
+
     <TextView
+        android:layout_toRightOf="@+id/imProduct"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
         android:id="@+id/tvName"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+        />
 
+    <ImageView
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@id/imProduct"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imStar"
+        android:layout_below="@+id/tvName"
+        />
+
+    <TextView
+        android:layout_marginLeft="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/imProduct"
+        android:layout_below="@+id/imStar"
+        android:layout_marginTop="5dp"
+        android:id="@+id/tvPrice"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
         />
 
 </RelativeLayout>

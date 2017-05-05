@@ -9,12 +9,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.yusufcakal.ra.R;
 import com.yusufcakal.ra.fragment.BasketFragment;
 import com.yusufcakal.ra.fragment.CategoryFragment;
 import com.yusufcakal.ra.interfaces.CategoryCallback;
+import com.yusufcakal.ra.model.Product;
 
 public class UserActivity extends AppCompatActivity implements View.OnClickListener, CategoryCallback{
 
@@ -70,4 +70,6 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
         startFragment(fragment);
         tvActionBar.setText(getApplicationContext().getResources().getString(R.string.product));
     }
+
+
 }

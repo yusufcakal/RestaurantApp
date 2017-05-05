@@ -1,6 +1,7 @@
 package com.yusufcakal.ra.fragment;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,13 +11,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.yusufcakal.ra.R;
-import com.yusufcakal.ra.adapter.GridAdapterCategory;
 import com.yusufcakal.ra.adapter.ProductAdapter;
-import com.yusufcakal.ra.interfaces.VolleyCallback;
-import com.yusufcakal.ra.model.Category;
+import com.yusufcakal.ra.interfaces.*;
 import com.yusufcakal.ra.model.Product;
 import com.yusufcakal.ra.model.Request;
 
@@ -31,7 +29,7 @@ import java.util.List;
  * Created by Yusuf on 3.05.2017.
  */
 
-public class ProductFragment extends Fragment implements VolleyCallback{
+public class ProductFragment extends Fragment implements VolleyCallback, AdapterView.OnItemClickListener{
 
     private View view;
     private ListView lvProduct;
@@ -42,11 +40,14 @@ public class ProductFragment extends Fragment implements VolleyCallback{
     private Product product;
     private ProgressDialog progressDialog;
     private TextView tvProductNull;
+    private List<String> imageList;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_product, container, false);
+
+        imageList = new ArrayList<>();
 
         id = getArguments().getInt("id");
         url+=id;
@@ -62,8 +63,19 @@ public class ProductFragment extends Fragment implements VolleyCallback{
 
         productList = new ArrayList<>();
         lvProduct = (ListView) view.findViewById(R.id.lvProduct);
+        lvProduct.setOnItemClickListener(this);
 
         return view;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
     }
 
     @Override
@@ -82,7 +94,14 @@ public class ProductFragment extends Fragment implements VolleyCallback{
                 String description = jsonObject.getString("description");
                 double price = jsonObject.getDouble("price");
 
-                product = new Product(productId, star, categoryId, name, description, price);
+                JSONArray imageArray = jsonObject.getJSONArray("images");
+
+                for (int j=0; j<imageArray.length(); j++){
+                    JSONObject imageObject = imageArray.getJSONObject(j);
+                    imageList.add(imageObject.getString("image"));
+                }
+
+                product = new Product(productId, star, categoryId, name, description, price, imageList);
                 productList.add(product);
 
             }
@@ -104,4 +123,10 @@ public class ProductFragment extends Fragment implements VolleyCallback{
     public void onSuccesAuth(JSONObject result) throws JSONException {
 
     }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+    }
+
 }

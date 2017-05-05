@@ -72,7 +72,7 @@ public class StaffLoginActivity extends AppCompatActivity implements View.OnClic
             }else{
 
                 Request request = new Request(this, url, com.android.volley.Request.Method.POST);
-                request.requestVolleyAuth(this,strUsername,  strPassword);
+                request.requestVolleyAuth(this,  strUsername,  strPassword);
                 progressDialog = new ProgressDialog(this);
                 progressDialog.setMessage("Giriş Yapılıyor..");
                 progressDialog.show();
