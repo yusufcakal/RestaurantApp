@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Product {
 
-    private int productId, star, categoryId;
+    private int productId, star, categoryId, piece;
     private String name, description;
     private double price;
     private List<String> imageList;
@@ -24,6 +24,14 @@ public class Product {
         this.description = description;
         this.price = price;
         this.imageList = imageList;
+    }
+
+    public int getPiece() {
+        return piece;
+    }
+
+    public void setPiece(int piece) {
+        this.piece = piece;
     }
 
     public int getProductId() {

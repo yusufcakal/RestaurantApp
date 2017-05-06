@@ -92,6 +92,7 @@ public class CategoryFragment extends Fragment implements AdapterView.OnItemClic
 
                 category = new Category(catId, name, image);
                 categoryList.add(category);
+
             }
         } catch (JSONException e) {
             e.printStackTrace();

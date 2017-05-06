@@ -21,11 +21,14 @@ import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.yusufcakal.ra.R;
 import com.yusufcakal.ra.interfaces.VolleyCallback;
 import com.yusufcakal.ra.model.Product;
+import com.yusufcakal.ra.model.ProductBasket;
 import com.yusufcakal.ra.model.Request;
-
+import android.provider.Settings.Secure;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,13 +42,15 @@ import java.util.List;
  * Created by Yusuf on 6.05.2017.
  */
 
-public class ProductDetail extends Fragment implements VolleyCallback,
+public class ProductDetailFragment extends Fragment implements VolleyCallback,
         BaseSliderView.OnSliderClickListener,
         ViewPagerEx.OnPageChangeListener, TextWatcher, View.OnClickListener {
 
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference databaseReference;
     private View view;
-    private int catId;
-    private String url = "http://fatihsimsek.me:9090/product/";
+    private int productIdExstra;
+    private String url = "http://fatihsimsek.me:9090/detail/";
     private List<String> imageList;
     private SliderLayout sliderLayout;
     private TextView tvPrice;
@@ -53,13 +58,18 @@ public class ProductDetail extends Fragment implements VolleyCallback,
     private ProgressDialog progressDialog;
     private double price;
     private FlatButton btnAddBasket;
-    private int productId;
-    private int piece;
+    private int piece, productID;
+    private String android_id;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_product_detail, container, false);
+
+        android_id = Secure.getString(getActivity().getContentResolver(), Secure.ANDROID_ID);
+
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference("basket").child(android_id);
 
         btnAddBasket = (FlatButton) view.findViewById(R.id.btnAddBasket);
         btnAddBasket.setOnClickListener(this);
@@ -74,8 +84,9 @@ public class ProductDetail extends Fragment implements VolleyCallback,
         etPiece.addTextChangedListener(this);
 
         imageList = new ArrayList<>();
-        catId = getArguments().getInt("id");
-        url+=catId;
+        productIdExstra = getArguments().getInt("id");
+
+        url+=productIdExstra;
         Request request = new Request(getActivity(), url, com.android.volley.Request.Method.GET);
         request.requestVolley(this);
 
@@ -89,20 +100,17 @@ public class ProductDetail extends Fragment implements VolleyCallback,
 
         JSONArray jsonArray = null;
         try {
-            jsonArray = result.getJSONArray("products");
-            for (int i=0; i<jsonArray.length(); i++){
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
+            JSONObject productObject = result.getJSONObject("product");
 
-                productId = jsonObject.getInt("productID");
-                int star = jsonObject.getInt("stars");
-                int categoryId = jsonObject.getInt("category");
-                String name = jsonObject.getString("name");
-                String description = jsonObject.getString("description");
-                price = jsonObject.getDouble("price");
+            productID = productObject.getInt("productID");
+            int star = productObject.getInt("stars");
+            String name = productObject.getString("name");
+            String description = productObject.getString("description");
+            price = productObject.getDouble("price");
 
-                tvPrice.setText(price+" TL");
+            JSONArray imageArray = productObject.getJSONArray("images");
 
-                JSONArray imageArray = jsonObject.getJSONArray("images");
+            tvPrice.setText(price+" TL");
 
                 for (int j=0; j<imageArray.length(); j++){
                     JSONObject imageObject = imageArray.getJSONObject(j);
@@ -127,7 +135,7 @@ public class ProductDetail extends Fragment implements VolleyCallback,
                 sliderLayout.setDuration(3000);
                 sliderLayout.addOnPageChangeListener(this);
 
-            }
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -172,6 +180,8 @@ public class ProductDetail extends Fragment implements VolleyCallback,
 
     @Override
     public void onClick(View v) {
+        ProductBasket productBasket = new ProductBasket(productID, piece);
+        databaseReference.push().setValue(productBasket);
         Toast.makeText(getActivity(),"Sepete Eklendi." , Toast.LENGTH_SHORT).show();
     }
 

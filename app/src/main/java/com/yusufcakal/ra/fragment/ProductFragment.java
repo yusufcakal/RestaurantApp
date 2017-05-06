@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.firebase.database.ValueEventListener;
 import com.yusufcakal.ra.R;
 import com.yusufcakal.ra.adapter.ProductAdapter;
 import com.yusufcakal.ra.interfaces.*;
@@ -116,7 +117,7 @@ public class ProductFragment extends Fragment implements VolleyCallback, Adapter
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        categoryCallback.call(new ProductDetail(), productList.get(position).getCategoryId());
+        categoryCallback.call(new ProductDetailFragment(), productList.get(position).getProductId());
     }
 
     @Override

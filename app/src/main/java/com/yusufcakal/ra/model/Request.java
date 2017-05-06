@@ -1,6 +1,7 @@
 package com.yusufcakal.ra.model;
 
 import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -9,6 +10,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.google.firebase.database.ValueEventListener;
+import com.yusufcakal.ra.fragment.CategoryFragment;
+import com.yusufcakal.ra.fragment.ProductDetailFragment;
+import com.yusufcakal.ra.fragment.ProductFragment;
 import com.yusufcakal.ra.interfaces.VolleyCallback;
 
 import org.json.JSONArray;
@@ -24,7 +29,7 @@ import java.util.Map;
 
 public class Request {
 
-    private RequestQueue requestQueue, requestQueue1;
+    private RequestQueue requestQueue;
     private Context context;
     private String url;
     private int requestMethod;
