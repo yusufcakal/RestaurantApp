@@ -9,4 +9,5 @@
     <string name="orderCategory">KATEGORİLER</string>
     <string name="product">ÜRÜNLER</string>
     <string name="add">EKLE</string>
+    <string name="addBasket">EKLE</string>
 </resources>

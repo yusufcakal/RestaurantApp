@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cengalabs.flatui.views.FlatButton;
 import com.squareup.picasso.Picasso;
 import com.yusufcakal.ra.R;
 import com.yusufcakal.ra.model.Product;
@@ -20,7 +21,7 @@ import java.util.List;
  * Created by Yusuf on 3.05.2017.
  */
 
-public class ProductAdapter extends BaseAdapter {
+public class ProductAdapter extends BaseAdapter{
 
     private Context context;
     private List<Product> productList;
@@ -32,6 +33,7 @@ public class ProductAdapter extends BaseAdapter {
         private ImageView imProduct, imStar;
         private int star;
         private double price;
+        private FlatButton btnAddBasket;
     }
 
     public ProductAdapter(Context context, List<Product> productList){
@@ -55,7 +57,7 @@ public class ProductAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, final View convertView, ViewGroup parent) {
         View view;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -74,6 +76,14 @@ public class ProductAdapter extends BaseAdapter {
         viewHolder.tvPrice = (TextView) view.findViewById(R.id.tvPrice);
         viewHolder.imStar = (ImageView) view.findViewById(R.id.imStar);
         viewHolder.imProduct = (ImageView) view.findViewById(R.id.imProduct);
+        viewHolder.btnAddBasket = (FlatButton) view.findViewById(R.id.btnAddBasket);
+
+        viewHolder.btnAddBasket.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "Sepete Eklendi.", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         viewHolder.star = product.getStar();
         viewHolder.price = product.getPrice();

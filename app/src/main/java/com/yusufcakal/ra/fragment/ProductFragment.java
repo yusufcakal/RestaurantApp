@@ -17,7 +17,6 @@ import com.yusufcakal.ra.adapter.ProductAdapter;
 import com.yusufcakal.ra.interfaces.*;
 import com.yusufcakal.ra.model.Product;
 import com.yusufcakal.ra.model.Request;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -41,6 +40,7 @@ public class ProductFragment extends Fragment implements VolleyCallback, Adapter
     private ProgressDialog progressDialog;
     private TextView tvProductNull;
     private List<String> imageList;
+    private CategoryCallback categoryCallback;
 
     @Nullable
     @Override
@@ -66,16 +66,6 @@ public class ProductFragment extends Fragment implements VolleyCallback, Adapter
         lvProduct.setOnItemClickListener(this);
 
         return view;
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
     }
 
     @Override
@@ -126,7 +116,19 @@ public class ProductFragment extends Fragment implements VolleyCallback, Adapter
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        categoryCallback.call(new ProductDetail(), productList.get(position).getCategoryId());
+    }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        categoryCallback = (CategoryCallback) context;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        categoryCallback = null;
     }
 
 }

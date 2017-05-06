@@ -16,7 +16,7 @@ import com.yusufcakal.ra.fragment.CategoryFragment;
 import com.yusufcakal.ra.interfaces.CategoryCallback;
 import com.yusufcakal.ra.model.Product;
 
-public class UserActivity extends AppCompatActivity implements View.OnClickListener, CategoryCallback{
+public class UserActivity extends AppCompatActivity implements View.OnClickListener, CategoryCallback {
 
     private TextView tvActionBar;
     private ImageView imCart;
@@ -70,6 +70,5 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
         startFragment(fragment);
         tvActionBar.setText(getApplicationContext().getResources().getString(R.string.product));
     }
-
 
 }

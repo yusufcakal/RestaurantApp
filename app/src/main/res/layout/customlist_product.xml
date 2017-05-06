@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:flatui="http://schemas.android.com/apk/res-auto"
+    >
 
     <ImageView
         android:layout_width="120dp"
@@ -39,6 +41,24 @@
         android:layout_marginTop="5dp"
         android:id="@+id/tvPrice"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+        />
+
+    <com.cengalabs.flatui.views.FlatButton
+        android:focusable="false"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        flatui:fl_touchEffect="fl_ripple"
+        flatui:fl_blockButtonEffectHeight="3dp"
+        android:text="@string/addBasket"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:id="@+id/btnAddBasket"
+        flatui:fl_theme="@array/btnStaffTheme"
+        android:layout_below="@+id/slider"
+        android:layout_marginTop="40dp"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
         />
 
 </RelativeLayout>
