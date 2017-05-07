@@ -57,13 +57,12 @@ public class CategoryFragment extends Fragment implements AdapterView.OnItemClic
         gridView = (GridView) view.findViewById(R.id.gvCat);
         gridView.setOnItemClickListener(this);
 
-
         return view;
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        categoryCallback.call(new ProductFragment(), position);
+        categoryCallback.call(new ProductFragment(), position+1);
     }
 
     @Override
@@ -75,7 +74,7 @@ public class CategoryFragment extends Fragment implements AdapterView.OnItemClic
     @Override
     public void onDetach() {
         super.onDetach();
-        gridAdapterCategory = null;
+        categoryCallback = null;
     }
 
     @Override

@@ -180,9 +180,15 @@ public class ProductDetailFragment extends Fragment implements VolleyCallback,
 
     @Override
     public void onClick(View v) {
-        ProductBasket productBasket = new ProductBasket(productID, piece);
-        databaseReference.push().setValue(productBasket);
-        Toast.makeText(getActivity(),"Sepete Eklendi." , Toast.LENGTH_SHORT).show();
+
+        if (piece==0){
+            Toast.makeText(getActivity(), "Adet Giriniz.", Toast.LENGTH_SHORT).show();
+        }else{
+            ProductBasket productBasket = new ProductBasket(productID, piece);
+            databaseReference.push().setValue(productBasket);
+            Toast.makeText(getActivity(),"Sepete Eklendi." , Toast.LENGTH_SHORT).show();
+        }
+
     }
 
 }

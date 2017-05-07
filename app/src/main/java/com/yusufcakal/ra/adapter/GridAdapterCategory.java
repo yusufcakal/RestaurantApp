@@ -54,19 +54,19 @@ public class GridAdapterCategory extends BaseAdapter {
             view = new View(context);
             view = inflater.inflate(R.layout.custom_catgrid, null);
 
-            ImageView imCat = (ImageView) view.findViewById(R.id.imCat);
-            TextView tvCat = (TextView) view.findViewById(R.id.tvCategory);
-            category = categoryList.get(position);
-
-            String image = category.getImage();
-            String name = category.getName();
-
-            Picasso.with(context).load(image).resize(175, 175).centerCrop().into(imCat);
-            tvCat.setText(name);
-
         } else {
             view = (View) convertView;
         }
+
+        ImageView imCat = (ImageView) view.findViewById(R.id.imCat);
+        TextView tvCat = (TextView) view.findViewById(R.id.tvCategory);
+        category = categoryList.get(position);
+
+        String image = category.getImage();
+        String name = category.getName();
+
+        Picasso.with(context).load(image).resize(175, 175).centerCrop().into(imCat);
+        tvCat.setText(name);
 
         return view;
     }
