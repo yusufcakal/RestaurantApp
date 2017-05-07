@@ -9,9 +9,11 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cengalabs.flatui.views.FlatButton;
+import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.yusufcakal.ra.Manifest;
 import com.yusufcakal.ra.R;
@@ -24,9 +26,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
 
     private Typeface tfBold, tfRegular;
     private FlatButton btnStaff, btnOrder;
-    public static final int REQUEST_CODE = 100;
-    public static final int PERMISSION_REQUEST = 200;
-    private static final String TAG = "TAG";
+    private TextView tvBarcode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +43,8 @@ public class MainActivity extends Activity implements View.OnClickListener{
         btnStaff.setTypeface(tfRegular);
         btnOrder.setTypeface(tfRegular);
 
+        tvBarcode = (TextView) findViewById(R.id.tvBarcode);
+
     }
 
     @Override
@@ -51,35 +53,27 @@ public class MainActivity extends Activity implements View.OnClickListener{
             startActivity(new Intent(this, StaffLoginActivity.class));
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         }else if (v.equals(btnOrder)){
-
-            int permissionChech = ActivityCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA);
-            if (permissionChech != PackageManager.PERMISSION_GRANTED){
-                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.CAMERA}, PERMISSION_REQUEST);
-                startCamActivity();
-            }else{
-                Log.i(TAG, "Kamera izni zaten verilmişti.");
-                startCamActivity();
-            }
-
-
+            Intent ıntent = new Intent(this, CamActivity.class);
+            startActivityForResult(ıntent, 0);
         }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        if(requestCode == REQUEST_CODE && resultCode == RESULT_OK){
-            if (data != null){
-                Barcode barcode = data.getParcelableExtra("barcode");
-                Toast.makeText(this, barcode.displayValue+"", Toast.LENGTH_SHORT).show();
+        if (requestCode == 0){
+            if (resultCode == CommonStatusCodes.SUCCESS){
+                if (data!=null){
+                    Barcode barcode = data.getParcelableExtra("barcode");
+                    tvBarcode.setText(barcode.displayValue); // Barkod da bulunan değer
+                }else{
+                    tvBarcode.setText("Barkod Bulunamadı.");
+                }
             }
+        }else{
+            super.onActivityResult(requestCode, resultCode, data);
         }
 
-    }
-
-    private void startCamActivity(){
-        startActivityForResult(new Intent(this, CamActivity.class), REQUEST_CODE); //UserActivity
-        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 
     @Override

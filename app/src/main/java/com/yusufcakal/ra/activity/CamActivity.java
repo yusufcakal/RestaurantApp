@@ -12,6 +12,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
@@ -23,11 +24,7 @@ import java.io.IOException;
 
 public class CamActivity extends AppCompatActivity {
 
-
     private SurfaceView surfaceView;
-    private BarcodeDetector barcodeDetector;
-    private CameraSource cameraSource;
-    private SurfaceHolder surfaceHolder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,36 +34,37 @@ public class CamActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
         surfaceView = (SurfaceView) findViewById(R.id.sfView);
-        surfaceView.setZOrderMediaOverlay(true);
-        surfaceHolder = surfaceView.getHolder();
 
-        barcodeDetector = new BarcodeDetector.Builder(this)
-                .setBarcodeFormats(Barcode.QR_CODE)
-                .build();
+        createCameraSource();
 
-        if (!barcodeDetector.isOperational()){
-            Toast.makeText(this, "Sorry", Toast.LENGTH_SHORT).show();
-            this.finish();
-        }
 
-        cameraSource = new CameraSource.Builder(this, barcodeDetector)
-                .setFacing(CameraSource.CAMERA_FACING_BACK)
-                .setRequestedFps(24)
+    }
+
+    private void createCameraSource() {
+
+        BarcodeDetector barcodeDetector = new BarcodeDetector.Builder(this).build();
+        final CameraSource cameraSource = new CameraSource.Builder(this, barcodeDetector)
                 .setAutoFocusEnabled(true)
                 .setRequestedPreviewSize(1920, 1024)
                 .build();
 
-
         surfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
-                try{
-                    if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED){
-                        cameraSource.start(surfaceView.getHolder());
-                    }
+                if (ActivityCompat.checkSelfPermission(CamActivity.this, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    return;
+                }
+                try {
+                    cameraSource.start(surfaceView.getHolder());
                 } catch (IOException e) {
                     e.printStackTrace();
-
                 }
             }
 
@@ -77,7 +75,7 @@ public class CamActivity extends AppCompatActivity {
 
             @Override
             public void surfaceDestroyed(SurfaceHolder holder) {
-
+                cameraSource.stop();
             }
         });
 
@@ -93,11 +91,14 @@ public class CamActivity extends AppCompatActivity {
                 if (barcodeSparseArray.size() > 0){
                     Intent ıntent = new Intent();
                     ıntent.putExtra("barcode", barcodeSparseArray.get(0));
-                    setResult(RESULT_OK, ıntent);
+                    setResult(CommonStatusCodes.SUCCESS, ıntent);
                     finish();
                 }
             }
         });
 
+
     }
+
+
 }
