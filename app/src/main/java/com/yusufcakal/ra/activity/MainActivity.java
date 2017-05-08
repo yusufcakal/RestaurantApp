@@ -26,7 +26,6 @@ public class MainActivity extends Activity implements View.OnClickListener{
 
     private Typeface tfBold, tfRegular;
     private FlatButton btnStaff, btnOrder;
-    private TextView tvBarcode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +42,6 @@ public class MainActivity extends Activity implements View.OnClickListener{
         btnStaff.setTypeface(tfRegular);
         btnOrder.setTypeface(tfRegular);
 
-        tvBarcode = (TextView) findViewById(R.id.tvBarcode);
-
     }
 
     @Override
@@ -54,27 +51,10 @@ public class MainActivity extends Activity implements View.OnClickListener{
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         }else if (v.equals(btnOrder)){
             Intent ıntent = new Intent(this, CamActivity.class);
-            startActivityForResult(ıntent, 0);
+            startActivity(ıntent);
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        if (requestCode == 0){
-            if (resultCode == CommonStatusCodes.SUCCESS){
-                if (data!=null){
-                    Barcode barcode = data.getParcelableExtra("barcode");
-                    tvBarcode.setText(barcode.displayValue); // Barkod da bulunan değer
-                }else{
-                    tvBarcode.setText("Barkod Bulunamadı.");
-                }
-            }
-        }else{
-            super.onActivityResult(requestCode, resultCode, data);
-        }
-
-    }
 
     @Override
     public void onBackPressed() {

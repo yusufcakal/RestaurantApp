@@ -1,30 +1,20 @@
 package com.yusufcakal.ra.activity;
 
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.SparseArray;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
-import android.widget.Toast;
-
-import com.google.android.gms.common.api.CommonStatusCodes;
-import com.google.android.gms.vision.CameraSource;
-import com.google.android.gms.vision.Detector;
+import com.google.android.gms.samples.vision.barcodereader.BarcodeCapture;
+import com.google.android.gms.samples.vision.barcodereader.BarcodeGraphic;
 import com.google.android.gms.vision.barcode.Barcode;
-import com.google.android.gms.vision.barcode.BarcodeDetector;
-import com.yusufcakal.ra.Manifest;
 import com.yusufcakal.ra.R;
+import java.util.List;
 
-import java.io.IOException;
+import xyz.belvi.mobilevisionbarcodescanner.BarcodeRetriever;
 
-public class CamActivity extends AppCompatActivity {
+public class CamActivity extends AppCompatActivity implements BarcodeRetriever {
 
-    private SurfaceView surfaceView;
+    private BarcodeCapture barcodeCapture = (BarcodeCapture) getSupportFragmentManager().findFragmentById(R.id.barcode);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,72 +23,53 @@ public class CamActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cam);
         getSupportActionBar().hide();
 
-        surfaceView = (SurfaceView) findViewById(R.id.sfView);
-
-        createCameraSource();
-
+        barcodeCapture.setRetrieval(this);
 
     }
 
-    private void createCameraSource() {
-
-        BarcodeDetector barcodeDetector = new BarcodeDetector.Builder(this).build();
-        final CameraSource cameraSource = new CameraSource.Builder(this, barcodeDetector)
-                .setAutoFocusEnabled(true)
-                .setRequestedPreviewSize(1920, 1024)
-                .build();
-
-        surfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {
+    @Override
+    public void onRetrieved(final Barcode barcode) {
+        runOnUiThread(new Runnable() {
             @Override
-            public void surfaceCreated(SurfaceHolder holder) {
-                if (ActivityCompat.checkSelfPermission(CamActivity.this, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
-                    return;
-                }
-                try {
-                    cameraSource.start(surfaceView.getHolder());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-
-            }
-
-            @Override
-            public void surfaceDestroyed(SurfaceHolder holder) {
-                cameraSource.stop();
-            }
-        });
-
-        barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
-            @Override
-            public void release() {
-
-            }
-
-            @Override
-            public void receiveDetections(Detector.Detections<Barcode> detections) {
-                final SparseArray<Barcode> barcodeSparseArray = detections.getDetectedItems();
-                if (barcodeSparseArray.size() > 0){
-                    Intent ıntent = new Intent();
-                    ıntent.putExtra("barcode", barcodeSparseArray.get(0));
-                    setResult(CommonStatusCodes.SUCCESS, ıntent);
-                    finish();
-                }
+            public void run() {
+                AlertDialog.Builder builder = new AlertDialog.Builder(CamActivity.this)
+                        .setTitle("code retrieved")
+                        .setMessage(barcode.displayValue);
+                builder.show();
             }
         });
 
 
     }
 
+    // for multiple callback
+    @Override
+    public void onRetrievedMultiple(final Barcode closetToClick, final List<BarcodeGraphic> barcodeGraphics) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                String message = "Code selected : " + closetToClick.displayValue + "\n\nother " +
+                        "codes in frame include : \n";
+                for (int index = 0; index < barcodeGraphics.size(); index++) {
+                    Barcode barcode = barcodeGraphics.get(index).getBarcode();
+                    message += (index + 1) + ". " + barcode.displayValue + "\n";
+                }
+                AlertDialog.Builder builder = new AlertDialog.Builder(CamActivity.this)
+                        .setTitle("code retrieved")
+                        .setMessage(message);
+                builder.show();
+            }
+        });
 
+    }
+
+    @Override
+    public void onBitmapScanned(SparseArray<Barcode> sparseArray) {
+        // when image is scanned and processed
+    }
+
+    @Override
+    public void onRetrievedFailed(String reason) {
+        // in case of failure
+    }
 }

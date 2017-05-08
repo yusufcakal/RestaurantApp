@@ -6,10 +6,14 @@
     android:layout_height="match_parent"
     tools:context="com.yusufcakal.ra.activity.CamActivity">
 
-    <SurfaceView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/sfView"
-        />
+    <fragment
+        android:id="@+id/barcode"
+        android:name="com.google.android.gms.samples.vision.barcodereader.BarcodeCapture"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        app:gvb_auto_focus="true"
+        app:gvb_code_format="all_format"
+        app:gvb_flash="false"
+        app:gvb_rect_colors="@array/rect_color" />
 
 </RelativeLayout>
