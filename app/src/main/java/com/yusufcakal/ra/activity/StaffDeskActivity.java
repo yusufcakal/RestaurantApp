@@ -26,6 +26,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 public class StaffDeskActivity extends AppCompatActivity implements AdapterView.OnItemClickListener,
         DeskList,
         SwipeRefreshLayout.OnRefreshListener{
@@ -88,9 +90,20 @@ public class StaffDeskActivity extends AppCompatActivity implements AdapterView.
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent ıntent = new Intent(this, DeskBasketActivity.class);
-        ıntent.putExtra("orderId",deskListGlobal.get(position).getOrderId());
-        startActivity(ıntent);
-        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+        String status = deskListGlobal.get(position).getStatus();
+        if (status.equals("0")){
+            new SweetAlertDialog(this)
+                    .setTitleText("Masa Boş")
+                    .show();
+        }else if (status.equals("1")){
+            ıntent.putExtra("orderId",deskListGlobal.get(position).getOrderId());
+            startActivity(ıntent);
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+        }else if (status.equals("2")){
+            new SweetAlertDialog(this)
+                    .setTitleText("Sipariş zaten onaylandı.")
+                    .show();
+        }
     }
 
     @Override
