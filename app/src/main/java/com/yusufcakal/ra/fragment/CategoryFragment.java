@@ -51,7 +51,7 @@ public class CategoryFragment extends Fragment implements AdapterView.OnItemClic
         Request request = new Request(getActivity(), urlCategory, com.android.volley.Request.Method.GET);
         request.requestVolley(this);
         progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setMessage("Yükleniyor.");
+        progressDialog.setMessage("Menü Yükleniyor.");
         progressDialog.show();
 
         gridView = (GridView) view.findViewById(R.id.gvCat);

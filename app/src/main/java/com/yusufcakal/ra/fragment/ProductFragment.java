@@ -11,9 +11,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.ValueEventListener;
 import com.yusufcakal.ra.R;
+import com.yusufcakal.ra.activity.StaffDeskActivity;
 import com.yusufcakal.ra.adapter.ProductAdapter;
 import com.yusufcakal.ra.interfaces.*;
 import com.yusufcakal.ra.model.Product;
@@ -117,7 +119,11 @@ public class ProductFragment extends Fragment implements VolleyCallback, Adapter
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        categoryCallback.call(new ProductDetailFragment(), productList.get(position).getProductId());
+        try {
+            Toast.makeText(getActivity(), productList.get(position).getProductId()+"", Toast.LENGTH_SHORT).show();
+        }catch (Exception e){
+            Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

@@ -24,6 +24,7 @@ import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.yusufcakal.ra.R;
+import com.yusufcakal.ra.interfaces.CategoryCallback;
 import com.yusufcakal.ra.interfaces.VolleyCallback;
 import com.yusufcakal.ra.model.Product;
 import com.yusufcakal.ra.model.ProductBasket;
@@ -75,7 +76,7 @@ public class ProductDetailFragment extends Fragment implements VolleyCallback,
         btnAddBasket.setOnClickListener(this);
 
         progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setMessage("Yükleniyor..");
+        progressDialog.setMessage("Ürün Yükleniyor..");
         progressDialog.show();
 
         sliderLayout = (SliderLayout) view.findViewById(R.id.slider);

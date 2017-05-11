@@ -14,6 +14,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.yusufcakal.ra.fragment.CategoryFragment;
 import com.yusufcakal.ra.fragment.ProductDetailFragment;
 import com.yusufcakal.ra.fragment.ProductFragment;
+import com.yusufcakal.ra.interfaces.ChangeDeskStatus;
+import com.yusufcakal.ra.interfaces.DeskList;
 import com.yusufcakal.ra.interfaces.VolleyCallback;
 
 import org.json.JSONArray;
@@ -89,5 +91,49 @@ public class Request {
 
     }
 
+    public void requestVolleyDeskList(final DeskList deskList){
+
+        final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(requestMethod, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                deskList.getDesk(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, String.valueOf(error), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+            requestQueue.add(jsonObjectRequest);
+
+    }
+
+    public void requestVolleyDeskList(final ChangeDeskStatus changeDeskStatus, final int orderId, final int status){
+
+        final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(requestMethod, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                changeDeskStatus.changeStatus(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, String.valueOf(error), Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Override
+            public byte[] getBody() {
+                HashMap<String, Integer> params = new HashMap<String, Integer>();
+                params.put("orderId", orderId);
+                params.put("status", status);
+                return new JSONObject(params).toString().getBytes();
+            }
+        };
+
+        requestQueue.add(jsonObjectRequest);
+
+    }
 
 }
+

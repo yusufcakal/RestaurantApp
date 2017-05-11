@@ -6,8 +6,11 @@
     <string name="copyright">www.restaurantapp.com</string>
     <string name="staffLoginHeader">PERSONEL GİRİŞ</string>
     <string name="staffDeskHeader">MASALAR</string>
+    <string name="staffDeskBasketHeader">SİPARİŞ</string>
     <string name="orderCategory">KATEGORİLER</string>
     <string name="product">ÜRÜNLER</string>
     <string name="add">EKLE</string>
     <string name="addBasket">EKLE</string>
+    <string name="orderComplete">SİPARİŞİ TAMAMLA</string>
+    <string name="orderVerify">SİPARİŞİ ONAYLA</string>
 </resources>

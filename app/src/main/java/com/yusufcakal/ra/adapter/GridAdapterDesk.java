@@ -9,6 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yusufcakal.ra.R;
+import com.yusufcakal.ra.model.Desk;
 
 import java.util.List;
 
@@ -19,21 +20,22 @@ import java.util.List;
 public class GridAdapterDesk extends BaseAdapter {
 
     private Context context;
-    private List<Integer> ıntegerList;
+    private List<Desk> deskList;
+    private Desk desk;
 
-    public GridAdapterDesk(Context context, List<Integer> ıntegerList){
+    public GridAdapterDesk(Context context, List<Desk> deskList){
         this.context = context;
-        this.ıntegerList = ıntegerList;
+        this.deskList = deskList;
     }
 
     @Override
     public int getCount() {
-        return ıntegerList.size();
+        return deskList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return ıntegerList.get(position);
+        return deskList.get(position);
     }
 
     @Override
@@ -49,24 +51,24 @@ public class GridAdapterDesk extends BaseAdapter {
         if (convertView == null) {
             view = new View(context);
             view = inflater.inflate(R.layout.custom_grid, null);
-
-            RelativeLayout relativeLayout = (RelativeLayout) view.findViewById(R.id.rlDesk);
-
-            /*
-
-            if (statusDesk.get(position) == 0){
-                relativeLayout.setBackgroundColor();
-            }
-
-            */
-
-
-            TextView tvDesk = (TextView) view.findViewById(R.id.tvDesk);
-            tvDesk.setText(String.valueOf(position));
-
         } else {
             view = (View) convertView;
         }
+
+        desk = deskList.get(position);
+
+        RelativeLayout rlDesk = (RelativeLayout) view.findViewById(R.id.rlDesk);
+        TextView tvName = (TextView) view.findViewById(R.id.tvName);
+
+        if (desk.getStatus().equals("0")){
+            rlDesk.setBackgroundColor(context.getResources().getColor(R.color.status0));
+        }else if (desk.getStatus().equals("1")){
+            rlDesk.setBackgroundColor(context.getResources().getColor(R.color.status1));
+        }else if (desk.getStatus().equals("2")){
+            rlDesk.setBackgroundColor(context.getResources().getColor(R.color.status2));
+        }
+
+        tvName.setText(desk.getName());
 
         return view;
     }

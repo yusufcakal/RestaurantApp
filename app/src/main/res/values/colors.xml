@@ -7,6 +7,11 @@
     <color name="btnBavkground">#F1A9A0</color>
     <color name="staffLoginBackground">#eee</color>
 
+    <!-- Desk Status Color -->
+    <color name="status0">#ABB7B7</color>
+    <color name="status1">#EC644B</color>
+    <color name="status2">#00B16A</color>
+
     <!-- CREATE A COLOR ARRAY IN COLORS XML -->
     <color name="btnOrderDarker">#19694d</color>
     <color name="btnOrderDark">#218c67</color>
@@ -32,5 +37,14 @@
         <item>@color/btnStaffPrimary</item>
         <item>@color/btnStaffLight</item>
     </integer-array>
+
+    <string-array name="movie_serial_bg">
+        <item>#24c6d5</item>
+        <item>#57dd86</item>
+        <item>#ad7dcf</item>
+        <item>#ff484d</item>
+        <item>#fcba59</item>
+        <item>#24c6d5</item>
+    </string-array>
 
 </resources>

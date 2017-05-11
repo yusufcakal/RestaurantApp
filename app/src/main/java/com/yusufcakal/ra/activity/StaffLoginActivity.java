@@ -1,7 +1,9 @@
 package com.yusufcakal.ra.activity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -37,6 +39,7 @@ public class StaffLoginActivity extends AppCompatActivity implements View.OnClic
     private Button btnLogin;
     private String url = "http://fatihsimsek.me:9090/login";
     private ProgressDialog progressDialog;
+    private boolean loginFlag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +56,14 @@ public class StaffLoginActivity extends AppCompatActivity implements View.OnClic
         getSupportActionBar().setCustomView(R.layout.custom_actionbar);
         tvActionBar = (TextView)getSupportActionBar().getCustomView().findViewById(R.id.tvActionBar);
         tvActionBar.setText(getResources().getString(R.string.staffLoginHeader));
+
+        SharedPreferences sharedpreferences = getSharedPreferences("staff", Context.MODE_PRIVATE);
+        loginFlag = sharedpreferences.getBoolean("login",false);
+
+        if (loginFlag){
+            startActivity(new Intent(this, StaffDeskActivity.class));
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+        }
 
     }
 
@@ -96,6 +107,10 @@ public class StaffLoginActivity extends AppCompatActivity implements View.OnClic
         if (getFlag){
             startActivity(new Intent(this, StaffDeskActivity.class));
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            SharedPreferences sharedpreferences = getSharedPreferences("staff", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putBoolean("login", true);
+            editor.commit();
         }else{
             Toast.makeText(this, "Giriş Yapılamadı.", Toast.LENGTH_SHORT).show();
         }

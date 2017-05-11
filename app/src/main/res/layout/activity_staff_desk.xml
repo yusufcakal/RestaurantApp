@@ -7,15 +7,25 @@
     android:background="@color/staffLoginBackground"
     tools:context="com.yusufcakal.ra.activity.StaffDeskActivity">
 
-    <GridView
+    <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/gvDesk"
-        android:columnWidth="120dp"
-        android:numColumns="auto_fit"
-        android:stretchMode="columnWidth"
-        android:layout_above="@+id/llBottom"
-        />
+        android:id="@+id/swipe_refresh_layout"
+        >
+
+        <GridView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/gvDesk"
+            android:columnWidth="120dp"
+            android:numColumns="auto_fit"
+            android:stretchMode="columnWidth"
+            android:layout_above="@+id/llBottom"
+            />
+
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
 
     <LinearLayout
         android:layout_alignParentBottom="true"
@@ -32,7 +42,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:id="@+id/rlDesk"
-            android:background="@color/btnStaffLight"
+            android:background="@color/status0"
             />
 
         <TextView
@@ -49,25 +59,7 @@
             android:layout_height="20dp"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="10dp"
-            android:background="@color/btnStaffDark"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_marginTop="9dp"
-            android:layout_marginLeft="8dp"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-            android:text="DOLU"
-            />
-
-
-        <RelativeLayout
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="10dp"
-            android:background="@color/btnStaffDarker"
+            android:background="@color/status1"
             />
 
         <TextView
@@ -77,6 +69,24 @@
             android:layout_marginLeft="8dp"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
             android:text="ONAY BEKLİYOR"
+            />
+
+
+        <RelativeLayout
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/status2"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginTop="9dp"
+            android:layout_marginLeft="8dp"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:text="ONAYLI"
             />
 
 

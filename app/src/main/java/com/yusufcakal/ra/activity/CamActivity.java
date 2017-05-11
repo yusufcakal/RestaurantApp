@@ -1,5 +1,6 @@
 package com.yusufcakal.ra.activity;
 
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,13 +11,15 @@ import com.google.android.gms.samples.vision.barcodereader.BarcodeCapture;
 import com.google.android.gms.samples.vision.barcodereader.BarcodeGraphic;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.yusufcakal.ra.R;
+//import com.yusufcakal.ra.model.SharedPref;
+
 import java.util.List;
 
 import xyz.belvi.mobilevisionbarcodescanner.BarcodeRetriever;
 
 public class CamActivity extends AppCompatActivity implements BarcodeRetriever {
 
-
+    //private SharedPref sharedPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +31,8 @@ public class CamActivity extends AppCompatActivity implements BarcodeRetriever {
         BarcodeCapture barcodeCapture = (BarcodeCapture) getSupportFragmentManager().findFragmentById(R.id.barcode);
         barcodeCapture.setRetrieval(this);
 
+        //sharedPref = new SharedPref(this, "desk_id");
+
     }
 
     @Override
@@ -35,10 +40,10 @@ public class CamActivity extends AppCompatActivity implements BarcodeRetriever {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(CamActivity.this, barcode.displayValue, Toast.LENGTH_SHORT).show();
+                //sharedPref.setVariable("deskID",barcode.displayValue);
+                startActivity(new Intent(getApplicationContext(), UserActivity.class));
             }
         });
-
 
     }
 

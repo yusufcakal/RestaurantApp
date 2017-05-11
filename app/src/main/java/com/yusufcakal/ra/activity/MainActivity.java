@@ -19,6 +19,7 @@ import com.yusufcakal.ra.Manifest;
 import com.yusufcakal.ra.R;
 import com.yusufcakal.ra.interfaces.VolleyCallback;
 import com.yusufcakal.ra.model.Request;
+//import com.yusufcakal.ra.model.SharedPref;
 
 import static com.google.android.gms.internal.zzt.TAG;
 
@@ -41,6 +42,8 @@ public class MainActivity extends Activity implements View.OnClickListener{
         btnOrder.setOnClickListener(this);
         btnStaff.setTypeface(tfRegular);
         btnOrder.setTypeface(tfRegular);
+
+
 
     }
 

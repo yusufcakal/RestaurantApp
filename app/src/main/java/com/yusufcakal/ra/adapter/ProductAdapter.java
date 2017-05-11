@@ -33,7 +33,6 @@ public class ProductAdapter extends BaseAdapter{
         private ImageView imProduct, imStar;
         private int star;
         private double price;
-        private FlatButton btnAddBasket;
     }
 
     public ProductAdapter(Context context, List<Product> productList){
@@ -76,29 +75,19 @@ public class ProductAdapter extends BaseAdapter{
         viewHolder.tvPrice = (TextView) view.findViewById(R.id.tvPrice);
         viewHolder.imStar = (ImageView) view.findViewById(R.id.imStar);
         viewHolder.imProduct = (ImageView) view.findViewById(R.id.imProduct);
-        viewHolder.btnAddBasket = (FlatButton) view.findViewById(R.id.btnAddBasket);
-
-        viewHolder.btnAddBasket.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context, "Sepete Eklendi.", Toast.LENGTH_SHORT).show();
-            }
-        });
 
         viewHolder.star = product.getStar();
         viewHolder.price = product.getPrice();
 
         try {
             Picasso.with(context)
-                    .load(product.getImageList().get(0))
+                    .load(product.getImage())
                     .resize(120, 120)
                     .centerCrop()
                     .into(viewHolder.imProduct);
         }catch (Exception e){
 
         }
-
-
 
         switch (viewHolder.star){
             case 0: viewHolder.imStar.setBackground(context.getResources().getDrawable(R.drawable.rating0)); break;

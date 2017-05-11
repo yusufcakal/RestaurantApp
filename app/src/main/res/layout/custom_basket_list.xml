@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:flatui="http://schemas.android.com/apk/res-auto"
-    >
+    android:layout_height="match_parent">
 
     <ImageView
         android:layout_width="120dp"
@@ -22,14 +20,15 @@
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
         />
 
-    <ImageView
-        android:layout_marginLeft="5dp"
+    <TextView
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_toRightOf="@id/imProduct"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imStar"
+        android:id="@+id/tvPiece"
         android:layout_below="@+id/tvName"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
         />
 
     <TextView
@@ -37,7 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/imProduct"
-        android:layout_below="@+id/imStar"
+        android:layout_below="@+id/tvPiece"
         android:layout_marginTop="5dp"
         android:id="@+id/tvPrice"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"

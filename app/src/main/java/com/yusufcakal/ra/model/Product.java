@@ -9,7 +9,7 @@ import java.util.List;
 public class Product {
 
     private int productId, star, categoryId, piece;
-    private String name, description;
+    private String name, description, image;
     private double price;
     private List<String> imageList;
 
@@ -26,8 +26,23 @@ public class Product {
         this.imageList = imageList;
     }
 
+    public Product(int piece, String name, String image, double price) {
+        this.piece = piece;
+        this.name = name;
+        this.image = image;
+        this.price = price;
+    }
+
     public int getPiece() {
         return piece;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public void setPiece(int piece) {

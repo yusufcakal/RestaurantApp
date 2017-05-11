@@ -9,18 +9,17 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.yusufcakal.ra.R;
 import com.yusufcakal.ra.fragment.BasketFragment;
 import com.yusufcakal.ra.fragment.CategoryFragment;
 import com.yusufcakal.ra.interfaces.CategoryCallback;
-import com.yusufcakal.ra.model.Product;
 
 public class UserActivity extends AppCompatActivity implements View.OnClickListener, CategoryCallback {
 
     private TextView tvActionBar;
     private ImageView imCart;
     private FragmentManager fragmentManager;
+    //private SharedPref sharedPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +36,9 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
         imCart = (ImageView) getSupportActionBar().getCustomView().findViewById(R.id.imCart);
         imCart.setOnClickListener(this);
         tvActionBar.setText(getResources().getString(R.string.orderCategory));
+
+        //sharedPref = new SharedPref(this, "desk_id");
+        //Toast.makeText(this, sharedPref.getVariable("deskID"), Toast.LENGTH_SHORT).show();
 
     }
 
@@ -70,5 +72,4 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
         startFragment(fragment);
         tvActionBar.setText(getApplicationContext().getResources().getString(R.string.product));
     }
-
 }
