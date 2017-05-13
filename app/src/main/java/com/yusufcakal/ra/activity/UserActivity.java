@@ -9,12 +9,21 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.yusufcakal.ra.R;
 import com.yusufcakal.ra.fragment.BasketFragment;
 import com.yusufcakal.ra.fragment.CategoryFragment;
+import com.yusufcakal.ra.fragment.DetailPrıductFragment;
+import com.yusufcakal.ra.fragment.ProductDetailFragment;
 import com.yusufcakal.ra.interfaces.CategoryCallback;
+import com.yusufcakal.ra.interfaces.ProductDetailCallback;
 
-public class UserActivity extends AppCompatActivity implements View.OnClickListener, CategoryCallback {
+public class UserActivity extends AppCompatActivity implements
+        View.OnClickListener,
+        CategoryCallback,
+        ProductDetailCallback
+        {
 
     private TextView tvActionBar;
     private ImageView imCart;
@@ -72,4 +81,13 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
         startFragment(fragment);
         tvActionBar.setText(getApplicationContext().getResources().getString(R.string.product));
     }
-}
+
+
+            @Override
+            public void onStartProductDetailFragment(DetailPrıductFragment productDetailFragment, int id) {
+                Bundle bundle = new Bundle();
+                bundle.putInt("id",id);
+                productDetailFragment.setArguments(bundle);
+                startFragment(productDetailFragment);
+            }
+        }

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:flatui="http://schemas.android.com/apk/res-auto">
+
+    <com.daimajia.slider.library.SliderLayout
+        android:id="@+id/slider"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+        android:text="FİYAT"
+        android:id="@+id/tvPricee"
+        android:layout_below="@+id/slider"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="30dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvPrice"
+        android:layout_below="@+id/tvPricee"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="25dp"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+        android:text="ADET"
+        android:id="@+id/tvPiecee"
+        android:layout_below="@+id/slider"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="150dp"
+        />
+
+    <EditText
+        android:inputType="number"
+        android:gravity="center"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/etPiece"
+        android:layout_below="@+id/tvPricee"
+        android:layout_marginLeft="140dp"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+        />
+
+    <com.cengalabs.flatui.views.FlatButton
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        flatui:fl_touchEffect="fl_ripple"
+        flatui:fl_blockButtonEffectHeight="3dp"
+        android:text="@string/addBasket"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:id="@+id/btnAddBasket"
+        flatui:fl_theme="@array/btnStaffTheme"
+        android:layout_below="@+id/slider"
+        android:layout_marginTop="40dp"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+        />
+
+</RelativeLayout>

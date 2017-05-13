@@ -4,6 +4,7 @@ android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
     defaultConfig {
+        multiDexEnabled = true
         applicationId "com.yusufcakal.ra"
         minSdkVersion 15
         targetSdkVersion 25

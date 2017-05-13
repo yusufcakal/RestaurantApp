@@ -41,7 +41,8 @@ public class CamActivity extends AppCompatActivity implements BarcodeRetriever {
             @Override
             public void run() {
                 //sharedPref.setVariable("deskID",barcode.displayValue);
-                startActivity(new Intent(getApplicationContext(), UserActivity.class));
+                //startActivity(new Intent(getApplicationContext(), UserActivity.class));
+                //overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
 

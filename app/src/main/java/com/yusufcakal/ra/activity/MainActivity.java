@@ -43,8 +43,6 @@ public class MainActivity extends Activity implements View.OnClickListener{
         btnStaff.setTypeface(tfRegular);
         btnOrder.setTypeface(tfRegular);
 
-
-
     }
 
     @Override
@@ -53,8 +51,10 @@ public class MainActivity extends Activity implements View.OnClickListener{
             startActivity(new Intent(this, StaffLoginActivity.class));
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         }else if (v.equals(btnOrder)){
-            Intent ıntent = new Intent(this, CamActivity.class);
-            startActivity(ıntent);
+            //Intent ıntent = new Intent(this, CamActivity.class);
+            //startActivity(ıntent);
+            startActivity(new Intent(getApplicationContext(), UserActivity.class));
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         }
     }
 

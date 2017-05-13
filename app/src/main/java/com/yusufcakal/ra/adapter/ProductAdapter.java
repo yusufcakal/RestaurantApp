@@ -81,7 +81,7 @@ public class ProductAdapter extends BaseAdapter{
 
         try {
             Picasso.with(context)
-                    .load(product.getImage())
+                    .load(product.getImageList().get(0))
                     .resize(120, 120)
                     .centerCrop()
                     .into(viewHolder.imProduct);

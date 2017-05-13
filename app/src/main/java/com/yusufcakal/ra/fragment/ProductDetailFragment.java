@@ -21,6 +21,7 @@ import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.yusufcakal.ra.R;
@@ -68,7 +69,7 @@ public class ProductDetailFragment extends Fragment implements VolleyCallback,
         view = inflater.inflate(R.layout.fragment_product_detail, container, false);
 
         android_id = Secure.getString(getActivity().getContentResolver(), Secure.ANDROID_ID);
-
+        FirebaseApp.initializeApp(getActivity());
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("basket").child(android_id);
 

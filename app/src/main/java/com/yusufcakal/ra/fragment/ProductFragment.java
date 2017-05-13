@@ -44,6 +44,7 @@ public class ProductFragment extends Fragment implements VolleyCallback, Adapter
     private TextView tvProductNull;
     private List<String> imageList;
     private CategoryCallback categoryCallback;
+    private ProductDetailCallback productDetailCallback;
 
     @Nullable
     @Override
@@ -120,7 +121,7 @@ public class ProductFragment extends Fragment implements VolleyCallback, Adapter
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         try {
-            Toast.makeText(getActivity(), productList.get(position).getProductId()+"", Toast.LENGTH_SHORT).show();
+            productDetailCallback.onStartProductDetailFragment(new DetailPrıductFragment(), productList.get(position).getProductId());
         }catch (Exception e){
             Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
         }
@@ -130,12 +131,14 @@ public class ProductFragment extends Fragment implements VolleyCallback, Adapter
     public void onAttach(Context context) {
         super.onAttach(context);
         categoryCallback = (CategoryCallback) context;
+        productDetailCallback = (ProductDetailCallback) context;
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
         categoryCallback = null;
+        productDetailCallback = null;
     }
 
 }
