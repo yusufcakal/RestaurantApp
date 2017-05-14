@@ -4,6 +4,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+
+
     <TextView
         android:textColor="@color/colorWhite"
         android:id="@+id/tvActionBar"

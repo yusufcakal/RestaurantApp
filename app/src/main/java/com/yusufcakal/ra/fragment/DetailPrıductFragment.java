@@ -1,6 +1,7 @@
 package com.yusufcakal.ra.fragment;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
@@ -10,6 +11,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,10 +22,12 @@ import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.yusufcakal.ra.R;
 import com.yusufcakal.ra.interfaces.VolleyCallback;
+import com.yusufcakal.ra.interfaces.VolleyTemp;
 import com.yusufcakal.ra.model.ProductBasket;
 import com.yusufcakal.ra.model.Request;
 
@@ -49,7 +53,7 @@ public class DetailPrıductFragment extends Fragment implements
     private DatabaseReference databaseReference;
     private View view;
     private int productIdExstra;
-    private String url = "http://fatihsimsek.me:9090/detail/";
+    private String urlDetail = "http://fatihsimsek.me:9090/detail/";
     private List<String> imageList;
     private SliderLayout sliderLayout;
     private TextView tvPrice;
@@ -67,12 +71,18 @@ public class DetailPrıductFragment extends Fragment implements
 
         android_id = Settings.Secure.getString(getActivity().getContentResolver(), Settings.Secure.ANDROID_ID);
 
+        FirebaseApp.initializeApp(getActivity());
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference("basket").child(android_id);
 
         btnAddBasket = (FlatButton) view.findViewById(R.id.btnAddBasket);
         btnAddBasket.setOnClickListener(this);
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Ürün Yükleniyor..");
         progressDialog.show();
+        progressDialog.hide();
+
+        //OnSuucese kaydet
 
         sliderLayout = (SliderLayout) view.findViewById(R.id.slider);
         tvPrice = (TextView) view.findViewById(R.id.tvPrice);
@@ -82,17 +92,13 @@ public class DetailPrıductFragment extends Fragment implements
         imageList = new ArrayList<>();
         productIdExstra = getArguments().getInt("id");
 
-        Toast.makeText(getActivity(), productIdExstra+"", Toast.LENGTH_SHORT).show();
+        urlDetail+=productIdExstra;
 
-        url+=productIdExstra;
-
-        Request request = new Request(getActivity(), url, com.android.volley.Request.Method.GET);
+        Request request = new Request(getActivity(), urlDetail, com.android.volley.Request.Method.GET);
         request.requestVolley(this);
 
         return view;
     }
-
-
 
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -121,8 +127,14 @@ public class DetailPrıductFragment extends Fragment implements
         }else{
             ProductBasket productBasket = new ProductBasket(productID, piece);
             databaseReference.push().setValue(productBasket);
-            Toast.makeText(getActivity(),"Sepete Eklendi." , Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Sepete Eklendi.", Toast.LENGTH_SHORT).show();
         }
+        closeKeyword();
+    }
+
+    private void closeKeyword(){
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     @Override
@@ -168,8 +180,6 @@ public class DetailPrıductFragment extends Fragment implements
 
                 imageArray = productObject.getJSONArray("images");
 
-                Toast.makeText(getActivity(), price+"", Toast.LENGTH_SHORT).show();
-
                 tvPrice.setText(price+" TL");
             }
 
@@ -207,4 +217,5 @@ public class DetailPrıductFragment extends Fragment implements
     public void onSuccesAuth(JSONObject result) throws JSONException {
 
     }
+
 }

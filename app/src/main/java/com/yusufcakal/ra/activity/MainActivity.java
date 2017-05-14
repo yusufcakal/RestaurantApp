@@ -1,7 +1,9 @@
 package com.yusufcakal.ra.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -55,6 +57,10 @@ public class MainActivity extends Activity implements View.OnClickListener{
             //startActivity(ıntent);
             startActivity(new Intent(getApplicationContext(), UserActivity.class));
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            SharedPreferences sharedpreferences = getSharedPreferences("userBasket", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putBoolean("user", true);
+            editor.commit();
         }
     }
 

@@ -17,6 +17,7 @@ import com.yusufcakal.ra.fragment.ProductFragment;
 import com.yusufcakal.ra.interfaces.ChangeDeskStatus;
 import com.yusufcakal.ra.interfaces.DeskList;
 import com.yusufcakal.ra.interfaces.VolleyCallback;
+import com.yusufcakal.ra.interfaces.VolleyTemp;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -127,6 +128,31 @@ public class Request {
                 HashMap<String, Integer> params = new HashMap<String, Integer>();
                 params.put("orderId", orderId);
                 params.put("status", status);
+                return new JSONObject(params).toString().getBytes();
+            }
+        };
+
+        requestQueue.add(jsonObjectRequest);
+
+    }
+
+    public void requestVolleyTempDesk(final VolleyTemp callback, final int deskId){
+
+        final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(requestMethod, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                callback.getTempId(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, String.valueOf(error), Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Override
+            public byte[] getBody() {
+                HashMap<String, Integer> params = new HashMap<String, Integer>();
+                params.put("deskid", deskId);
                 return new JSONObject(params).toString().getBytes();
             }
         };
