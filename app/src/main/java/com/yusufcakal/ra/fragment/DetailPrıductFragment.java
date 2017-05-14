@@ -26,6 +26,7 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.yusufcakal.ra.R;
+import com.yusufcakal.ra.interfaces.ProductDetailBarChange;
 import com.yusufcakal.ra.interfaces.VolleyCallback;
 import com.yusufcakal.ra.interfaces.VolleyTemp;
 import com.yusufcakal.ra.model.ProductBasket;
@@ -37,6 +38,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 /**
  * Created by Yusuf on 13.05.2017.
@@ -63,6 +66,7 @@ public class DetailPrıductFragment extends Fragment implements
     private FlatButton btnAddBasket;
     private int piece, productID;
     private String android_id;
+    private ProductDetailBarChange productDetailBarChange;
 
     @Nullable
     @Override
@@ -123,11 +127,17 @@ public class DetailPrıductFragment extends Fragment implements
     @Override
     public void onClick(View v) {
         if (piece==0){
-            Toast.makeText(getActivity(), "Adet Giriniz.", Toast.LENGTH_SHORT).show();
+            new SweetAlertDialog(getActivity(), SweetAlertDialog.ERROR_TYPE)
+                    .setTitleText("ADET")
+                    .setContentText("Lütfen seçmiş olduğunuz ürüne adet bilgisi giriniz.")
+                    .show();
         }else{
             ProductBasket productBasket = new ProductBasket(productID, piece);
             databaseReference.push().setValue(productBasket);
-            Toast.makeText(getActivity(), "Sepete Eklendi.", Toast.LENGTH_SHORT).show();
+            new SweetAlertDialog(getActivity(), SweetAlertDialog.SUCCESS_TYPE)
+                    .setTitleText("EKLENDİ")
+                    .setContentText("Ürün sepete eklendi.")
+                    .show();
         }
         closeKeyword();
     }
@@ -178,6 +188,8 @@ public class DetailPrıductFragment extends Fragment implements
                 String description = productObject.getString("description");
                 price = productObject.getDouble("price");
 
+                productDetailBarChange.onChangeBar(name);
+
                 imageArray = productObject.getJSONArray("images");
 
                 tvPrice.setText(price+" TL");
@@ -206,8 +218,6 @@ public class DetailPrıductFragment extends Fragment implements
             sliderLayout.setDuration(3000);
             sliderLayout.addOnPageChangeListener(this);
 
-
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -218,4 +228,15 @@ public class DetailPrıductFragment extends Fragment implements
 
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        productDetailBarChange = (ProductDetailBarChange) context;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        productDetailBarChange = null;
+    }
 }

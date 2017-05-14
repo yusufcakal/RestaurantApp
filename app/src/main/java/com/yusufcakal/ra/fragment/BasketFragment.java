@@ -47,6 +47,7 @@ import java.util.List;
  */
 
 public class BasketFragment extends Fragment implements
+        ValueEventListener,
         View.OnClickListener,
         VolleyTemp {
 
@@ -64,6 +65,8 @@ public class BasketFragment extends Fragment implements
     private FlatButton btnOrder;
     private boolean userFlag;
     private int deskID=1;
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference databaseReference;
 
     @Nullable
     @Override
@@ -92,16 +95,16 @@ public class BasketFragment extends Fragment implements
         }
 
         productBaskets = new ArrayList<>();
-        //firebaseDatabase = FirebaseDatabase.getInstance();
-        //databaseReference = firebaseDatabase.getReference("basket").child(android_id);
-        //databaseReference.addValueEventListener(this);
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference("basket").child(android_id);
+        databaseReference.addValueEventListener(this);
 
         return view;
     }
 
     @Override
     public void getTempId(JSONObject tempId) {
-        Toast.makeText(getActivity(), tempId+"", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), String.valueOf(tempId), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -109,6 +112,28 @@ public class BasketFragment extends Fragment implements
         if (v.equals(btnOrder) && userFlag){
             Toast.makeText(getActivity(), "Sipariş Verildi Onay Bekliyor.", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void onDataChange(DataSnapshot dataSnapshot) {
+        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+            productBasket = new ProductBasket();
+            productBasket.setPiece(snapshot.getValue(ProductBasket.class).getPiece());
+            productBasket.setProductId(snapshot.getValue(ProductBasket.class).getProductId());
+            productBaskets.add(productBasket);
+        }
+
+        try {
+            Toast.makeText(getActivity(), productBaskets.size()+"", Toast.LENGTH_SHORT).show();
+        }catch (Exception e){
+
+        }
+
+    }
+
+    @Override
+    public void onCancelled(DatabaseError databaseError) {
+
     }
 
 }

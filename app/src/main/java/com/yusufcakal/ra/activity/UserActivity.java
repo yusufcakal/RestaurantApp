@@ -17,18 +17,22 @@ import com.yusufcakal.ra.fragment.CategoryFragment;
 import com.yusufcakal.ra.fragment.DetailPrıductFragment;
 import com.yusufcakal.ra.fragment.ProductDetailFragment;
 import com.yusufcakal.ra.interfaces.CategoryCallback;
+import com.yusufcakal.ra.interfaces.ProductDetailBarChange;
 import com.yusufcakal.ra.interfaces.ProductDetailCallback;
 
 public class UserActivity extends AppCompatActivity implements
         View.OnClickListener,
         CategoryCallback,
-        ProductDetailCallback
+        ProductDetailCallback,
+        ProductDetailBarChange
         {
 
-    private TextView tvActionBar;
-    private ImageView imCart;
-    private FragmentManager fragmentManager;
-    //private SharedPref sharedPref;
+
+        private TextView tvActionBar;
+        private ImageView imCart;
+        private FragmentManager fragmentManager;
+        //private SharedPref sharedPref;
+        private ImageView imBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +46,9 @@ public class UserActivity extends AppCompatActivity implements
         getSupportActionBar().setDisplayOptions(android.support.v7.app.ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.custom_actionbaruser);
         tvActionBar = (TextView)getSupportActionBar().getCustomView().findViewById(R.id.tvActionBar);
+        imBack = (ImageView) getSupportActionBar().getCustomView().findViewById(R.id.imBack);
         imCart = (ImageView) getSupportActionBar().getCustomView().findViewById(R.id.imCart);
+        imBack.setOnClickListener(this);
         imCart.setOnClickListener(this);
         tvActionBar.setText(getResources().getString(R.string.orderCategory));
 
@@ -63,6 +69,9 @@ public class UserActivity extends AppCompatActivity implements
         if (v.equals(imCart)){
             startFragment(new BasketFragment());
             tvActionBar.setText("SEPETİM");
+        }else if (v.equals(imBack)){
+            startFragment(new CategoryFragment());
+            imBack.setVisibility(View.GONE);
         }
     }
 
@@ -89,5 +98,12 @@ public class UserActivity extends AppCompatActivity implements
                 bundle.putInt("id",id);
                 productDetailFragment.setArguments(bundle);
                 startFragment(productDetailFragment);
+            }
+
+            @Override
+            public void onChangeBar(String title) {
+                tvActionBar.setText(title);
+                tvActionBar.setAllCaps(true);
+                imBack.setVisibility(View.VISIBLE);
             }
         }
