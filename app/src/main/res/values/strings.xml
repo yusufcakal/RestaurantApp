@@ -13,4 +13,5 @@
     <string name="addBasket">EKLE</string>
     <string name="orderComplete">SİPARİŞİ TAMAMLA</string>
     <string name="orderVerify">SİPARİŞİ ONAYLA</string>
+    <string name="orderHistory">SİPARİŞ GEÇMİŞİ</string>
 </resources>

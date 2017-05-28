@@ -62,6 +62,7 @@ public class StaffLoginActivity extends AppCompatActivity implements View.OnClic
 
         if (loginFlag){
             startActivity(new Intent(this, StaffDeskActivity.class));
+            //startActivity(new Intent(this, DeskOrdersActivity.class));
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         }
 

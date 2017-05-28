@@ -13,4 +13,16 @@
         android:maxLines="1"
         android:textAppearance="?android:attr/textAppearanceMedium"/>
 
+    <ImageButton
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/logout"
+        android:layout_centerVertical="true"
+        android:id="@+id/ibLogout"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:visibility="invisible"
+        />
+
 </RelativeLayout>

@@ -6,12 +6,12 @@ package com.yusufcakal.ra.model;
 
 public class Desk {
 
-    private String name, status, orderId;
+    private String name, status, tempId;
 
-    public Desk(String name, String status, String orderId) {
+    public Desk(String name, String status, String tempId) {
         this.name = name;
         this.status = status;
-        this.orderId = orderId;
+        this.tempId = tempId;
     }
 
     public Desk() {
@@ -34,10 +34,10 @@ public class Desk {
     }
 
     public String getOrderId() {
-        return orderId;
+        return tempId;
     }
 
     public void setOrderId(String orderId) {
-        this.orderId = orderId;
+        this.tempId = orderId;
     }
 }

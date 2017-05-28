@@ -1,7 +1,6 @@
 package com.yusufcakal.ra.model;
 
 import android.content.Context;
-import android.support.v4.app.Fragment;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -9,17 +8,12 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
-import com.google.firebase.database.ValueEventListener;
-import com.yusufcakal.ra.fragment.CategoryFragment;
-import com.yusufcakal.ra.fragment.ProductDetailFragment;
-import com.yusufcakal.ra.fragment.ProductFragment;
 import com.yusufcakal.ra.interfaces.ChangeDeskStatus;
+import com.yusufcakal.ra.interfaces.DeleteCallback;
 import com.yusufcakal.ra.interfaces.DeskList;
 import com.yusufcakal.ra.interfaces.VolleyCallback;
 import com.yusufcakal.ra.interfaces.VolleyTemp;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -57,6 +51,31 @@ public class Request {
 
             }
         });
+
+        requestQueue.add(jsonObjectRequest);
+
+    }
+
+    public void requestDeleteBasket(final DeleteCallback callback, final int basketId){
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(requestMethod, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                callback.deleteResponse(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            public byte[] getBody() {
+                HashMap<String, String> params = new HashMap<String, String>();
+                params.put("basketId", String.valueOf(basketId));
+                return new JSONObject(params).toString().getBytes();
+            }
+        };
 
         requestQueue.add(jsonObjectRequest);
 

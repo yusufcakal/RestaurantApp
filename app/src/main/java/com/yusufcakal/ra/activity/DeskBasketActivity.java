@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,6 +14,8 @@ import com.cengalabs.flatui.views.FlatButton;
 import com.yusufcakal.ra.R;
 import com.yusufcakal.ra.adapter.DeskOrderAdapter;
 import com.yusufcakal.ra.interfaces.ChangeDeskStatus;
+import com.yusufcakal.ra.interfaces.DeleteCallback;
+import com.yusufcakal.ra.interfaces.DeleteCallback;
 import com.yusufcakal.ra.interfaces.DeskList;
 import com.yusufcakal.ra.model.Product;
 import com.yusufcakal.ra.model.Request;
@@ -27,23 +30,27 @@ import java.util.List;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class DeskBasketActivity extends AppCompatActivity implements
+        DeleteCallback,
+        AdapterView.OnItemLongClickListener,
         DeskList,
         View.OnClickListener,
         ChangeDeskStatus
 {
 
     private TextView tvActionBar;
-    private String orderId;
+    private int orderId, status;
     private ListView lvBasket;
     private DeskOrderAdapter deskOrderAdapter;
     private List<Product> productList;
     private String url = "http://fatihsimsek.me:9090/baskets/";
     private String urlChangeStatus = "http://fatihsimsek.me:9090/changestatus";
+    private String urlDeleteBasket = "http://fatihsimsek.me:9090/deletebasket";
     private String name, image;
-    private int piece;
+    private int piece, basketID;
     private double price;
     private Product product;
     private FlatButton btnOrderVerify;
+    private SweetAlertDialog sweetAlertDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +59,7 @@ public class DeskBasketActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_desk_basket);
 
         lvBasket= (ListView) findViewById(R.id.lvBasket);
+        lvBasket.setOnItemLongClickListener(this);
         productList = new ArrayList<>();
 
         btnOrderVerify = (FlatButton) findViewById(R.id.btnOrderVerify);
@@ -64,8 +72,23 @@ public class DeskBasketActivity extends AppCompatActivity implements
         tvActionBar.setTextAppearance(this, android.R.style.TextAppearance_Large);
         tvActionBar.setTextColor(Color.WHITE);
 
-        orderId = getIntent().getStringExtra("orderId");
+        orderId = getIntent().getIntExtra("orderId",-1);
+        status = getIntent().getIntExtra("status",-1);
         url+=orderId;
+
+        if (status == 0){
+            btnOrderVerify.setBackgroundColor(getResources().getColor(R.color.status0));
+            btnOrderVerify.setText("SİPARİŞ YOK");
+            btnOrderVerify.setClickable(false);
+        }else if (status == 1){
+            btnOrderVerify.setBackgroundColor(getResources().getColor(R.color.status1));
+            btnOrderVerify.setText("SİPARİŞİ ONAYLA");
+            btnOrderVerify.setClickable(true);
+        }else{
+            btnOrderVerify.setBackgroundColor(getResources().getColor(R.color.status2));
+            btnOrderVerify.setText("SİPARİŞ ONAYLANMIŞ");
+            btnOrderVerify.setClickable(false);
+        }
 
         Request request = new Request(this, url, com.android.volley.Request.Method.GET);
         request.requestVolleyDeskList(this);
@@ -90,8 +113,9 @@ public class DeskBasketActivity extends AppCompatActivity implements
                 image = desk.getString("image");
                 piece = desk.getInt("piece");
                 price = desk.getDouble("total");
+                basketID = desk.getInt("basketID");
 
-                product = new Product(piece, name, image, price);
+                product = new Product(piece, name, image, price, basketID);
                 productList.add(product);
 
             }
@@ -132,6 +156,57 @@ public class DeskBasketActivity extends AppCompatActivity implements
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+
+        basketID = productList.get(position).getBasketID();
+
+        sweetAlertDialog = new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE);
+        sweetAlertDialog.setTitleText("ÜRÜN SİLİNSİN Mİ ?");
+        sweetAlertDialog.setContentText("Ürün siparişten silinsin mi ?");
+        sweetAlertDialog.setConfirmText("Sil");
+        sweetAlertDialog.setCancelText("Kapat");
+        sweetAlertDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+            @Override
+            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                try {
+                    Request request = new Request(getApplicationContext(), urlDeleteBasket, com.android.volley.Request.Method.POST);
+                    request.requestDeleteBasket(DeskBasketActivity.this, productList.get(position).getBasketID());
+                }catch (Exception e){
+                }
+
+            }
+        });
+        sweetAlertDialog.setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+            @Override
+            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                sweetAlertDialog.dismiss();
+            }
+        });
+        sweetAlertDialog.show();
+
+        return true;
+    }
+
+    @Override
+    public void deleteResponse(JSONObject jsonObject) {
+        try {
+            boolean flag = jsonObject.getBoolean("result");
+            if (flag){
+                sweetAlertDialog.dismiss();
+                for (Product product : productList) {
+                    if (product.getBasketID() == basketID){
+                        productList.remove(product);
+                        deskOrderAdapter = new DeskOrderAdapter(getApplicationContext(), productList);
+                        lvBasket.setAdapter(deskOrderAdapter);
+                    }
+                }
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

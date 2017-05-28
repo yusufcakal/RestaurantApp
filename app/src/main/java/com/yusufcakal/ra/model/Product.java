@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Product {
 
-    private int productId, star, categoryId, piece;
+    private int productId, star, categoryId, piece, basketID;
     private String name, description, image;
     private double price;
     private List<String> imageList;
@@ -26,11 +26,20 @@ public class Product {
         this.imageList = imageList;
     }
 
-    public Product(int piece, String name, String image, double price) {
+    public Product(int piece, String name, String image, double price, int basketID) {
         this.piece = piece;
         this.name = name;
         this.image = image;
         this.price = price;
+        this.basketID = basketID;
+    }
+
+    public int getBasketID() {
+        return basketID;
+    }
+
+    public void setBasketID(int basketID) {
+        this.basketID = basketID;
     }
 
     public int getPiece() {
