@@ -74,8 +74,6 @@ public class BasketAdapter extends BaseAdapter {
 
         }
 
-
-
         tvName.setText(productBasketDetail.getName());
         tvPrice.setText((String.valueOf(productBasketDetail.getPrice()+ " TL")));
         tvPiece.setText(String.valueOf(productBasketDetail.getPiece() + " Adet"));

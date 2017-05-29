@@ -23,7 +23,6 @@ public class DeskOrderAdapter extends BaseAdapter {
     private Context context;
     private List<Product> productList;
     private Product product;
-    private ProductAdapter.ViewHolder viewHolder;
 
     public DeskOrderAdapter(Context context, List<Product> productList){
         this.context = context;
@@ -80,7 +79,7 @@ public class DeskOrderAdapter extends BaseAdapter {
 
         tvName.setText(product.getName());
         tvPrice.setText(price + " TL");
-        tvPiece.setText(piece+ " ADET");
+        tvPiece.setText(String.valueOf(piece)+ " ADET");
 
         return view;
     }

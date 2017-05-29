@@ -1,16 +1,21 @@
 package com.yusufcakal.ra.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cengalabs.flatui.views.FlatButton;
+import com.orhanobut.dialogplus.DialogPlus;
+import com.orhanobut.dialogplus.OnItemClickListener;
 import com.yusufcakal.ra.R;
 import com.yusufcakal.ra.adapter.DeskOrderAdapter;
 import com.yusufcakal.ra.interfaces.ChangeDeskStatus;
@@ -23,6 +28,7 @@ import com.yusufcakal.ra.model.Request;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +38,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 public class DeskBasketActivity extends AppCompatActivity implements
         DeleteCallback,
         AdapterView.OnItemLongClickListener,
+        AdapterView.OnItemClickListener,
         DeskList,
         View.OnClickListener,
         ChangeDeskStatus
@@ -60,6 +67,7 @@ public class DeskBasketActivity extends AppCompatActivity implements
 
         lvBasket= (ListView) findViewById(R.id.lvBasket);
         lvBasket.setOnItemLongClickListener(this);
+        lvBasket.setOnItemClickListener(this);
         productList = new ArrayList<>();
 
         btnOrderVerify = (FlatButton) findViewById(R.id.btnOrderVerify);
@@ -210,4 +218,47 @@ public class DeskBasketActivity extends AppCompatActivity implements
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+        List<Product> products = new ArrayList<>();
+        final Product product = productList.get(position);
+        products.add(product);
+        DeskOrderAdapter deskOrderAdapter = new DeskOrderAdapter(this, products);
+
+        DialogPlus dialog = DialogPlus.newDialog(this)
+                .setAdapter(deskOrderAdapter)
+                .setFooter(R.layout.deskorder_footer)
+                .setOnItemClickListener(new OnItemClickListener() {
+                    @Override
+                    public void onItemClick(DialogPlus dialog, Object item, View view, int position) {
+                        Toast.makeText(DeskBasketActivity.this, productList.get(position).getPiece()+"", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setExpanded(true)  // This will enable the expand feature, (similar to android L share dialog)
+                .create();
+        dialog.show();
+
+        Button btnIncrementPiece = (Button) dialog.getFooterView().findViewById(R.id.btnIncrementPiece);
+        Button btnDecrementPiece = (Button) dialog.getFooterView().findViewById(R.id.btnDecrementPiece);
+
+        btnIncrementPiece.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                product.incrementerPiece();
+                Toast.makeText(DeskBasketActivity.this, product.getPiece()+"", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        btnDecrementPiece.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                product.decrementerPiece();
+                Toast.makeText(DeskBasketActivity.this, product.getPiece()+"", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
 }

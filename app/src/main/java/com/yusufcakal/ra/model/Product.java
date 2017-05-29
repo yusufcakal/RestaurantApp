@@ -34,6 +34,14 @@ public class Product {
         this.basketID = basketID;
     }
 
+    public void incrementerPiece(){
+        this.piece++;
+    }
+
+    public void decrementerPiece(){
+        this.piece--;
+    }
+
     public int getBasketID() {
         return basketID;
     }
