@@ -27,8 +27,9 @@ This project is a restaurant application and has been developed to meet the need
 
   * [Firebase](https://github.com/firebase/quickstart-android)
   * [Volley](https://github.com/google/volley)
+  * [QR Code Reader](https://github.com/KingsMentor/MobileVisionBarcodeScanner)
   * [Picasso](https://github.com/square/picasso)
   * [Sweet Alert](https://github.com/pedant/sweet-alert-dialog)
-  * [FlatUI](https://github.com/eluleci/FlatUI)
+  * [FlatUI](https://github.com/eluleci/FlatUI)  
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
