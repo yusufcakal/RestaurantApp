@@ -2,7 +2,9 @@
 
 # Restaurant Application
 
-This project is a restaurant application and has been developed to meet the needs of a simple restaurant. The customer who comes to the restaurant can order the QR Code from the mobile phone on the table.
+This project is a restaurant application and has been developed to meet the needs of a simple restaurant. The customer who comes to the restaurant can order the QR Code from the mobile phone on the table. 
+
+Webservice by [eroberer](https://github.com/eroberer/Restaurant-Application-WebServices-NodeJS)
 
 ## Functionality
 #### User Centered
